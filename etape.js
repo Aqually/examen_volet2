@@ -33,6 +33,7 @@ app.get('/collection', (req, res) => {
     afficherCollection(res)
 })
 
+//pour afficher la collection provinces
 function afficherCollection(res){
     const cursor = db.collection('provinces').find().toArray( (err, data) => {
         if (err)
@@ -43,6 +44,7 @@ function afficherCollection(res){
     })
 }
 
+//pour créer une province avec un nombre aléatoire
 function creerProvince(){
     return {
         code: "QC",
