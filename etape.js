@@ -37,6 +37,30 @@ app.get('/provinces',  (req, res) => {
     });
 })
 
+function creerProvince(){
+    return {
+        code: "QC",
+        nom: "Québec",
+        capital: Math.floor(Math.random() * 100) + 100
+    }
+}
+
+//requte pour ajouter
+app.get('/ajouter', (req, res) => {
+    //on sauvegarde les données dans la DB mongo
+    const data = creerProvince();
+    db.collection('provinces').save(data, (err, result) => {
+        if (err)
+            return console.warn(err)
+        const cursor = db.collection('provinces').find().toArray( (err, data) => {
+            if (err)
+                return console.log(err)
+                // renders index.ejs
+            // affiche le contenu de la BD
+            res.render('index.ejs', {province: data})
+        })
+    })
+})
 app.get("/", (req, res) =>{
     res.redirect('/provinces');
 })
