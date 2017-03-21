@@ -64,6 +64,12 @@ app.get('/ajouter', (req, res) => {
     })
 })
 
+//requte pour détruire
+app.get('/detruire', (req, res) => {
+    db.collection('provinces').drop();
+    afficherCollection(res);
+})
+
 app.get("/", (req, res) =>{
     res.redirect('/provinces');
 })
