@@ -18,7 +18,7 @@ app.get('/fichier',  (req, res) => {
 })
 
 app.get('/collection', (req, res) => {
-    const cursor = db.collection('carnet_adresse').find().toArray( (err, data) => {
+    const cursor = db.collection('provinces').find().toArray( (err, data) => {
         if (err)
             return console.log(err)
             // renders index.ejs
@@ -42,7 +42,7 @@ app.get("/", (req, res) =>{
 })
 
 //pour se connecter à la base de donnée Mongo
-MongoClient.connect('mongodb://127.0.0.1:27017/carnet_adresse', (err, database) => {
+MongoClient.connect('mongodb://127.0.0.1:27017/provinces', (err, database) => {
     if (err)
         return console.log(err)
     db = database
