@@ -11,7 +11,6 @@ app.use(express.static('public'))  // pour utiliser le dossier public
 app.use(bodyParser.json())  // pour traiter les données JSON
 
 
-
 //acces au fichier à lire sur "/fichier"
 app.get('/fichier',  (req, res) => {
     res.sendFile(__dirname + "/public/text/collection_provinces.json")
@@ -26,8 +25,6 @@ app.get('/provinces',  (req, res) => {
         res.render(__dirname + "/views/index.ejs", {province: province})
     });
 })
-
-
 
 app.get('/collection', (req, res) => {
     afficherCollection(res)
