@@ -11,24 +11,6 @@ app.use(express.static('public'))  // pour utiliser le dossier public
 app.use(bodyParser.json())  // pour traiter les données JSON
 
 
-//acces au fichier à lire sur "/fichier"
-app.get('/fichier',  (req, res) => {
-    res.sendFile(__dirname + "/public/text/collection_provinces.json")
-})
-
-//acces au fichier à lire sur "/"
-app.get('/provinces',  (req, res) => {
-    fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', (err, data) => {
-        const province = JSON.parse( data );
-        if (err)
-            return console.log(err)
-        res.render(__dirname + "/views/index.ejs", {province: province})
-    });
-})
-
-app.get('/collection', (req, res) => {
-    afficherCollection(res)
-})
 
 //pour afficher la collection provinces
 function afficherCollection(res){
@@ -50,6 +32,26 @@ function creerProvince(){
     }
 }
 
+
+//acces au fichier à lire sur "/fichier"
+app.get('/fichier',  (req, res) => {
+    res.sendFile(__dirname + "/public/text/collection_provinces.json")
+})
+
+//acces au fichier à lire sur "/"
+app.get('/provinces',  (req, res) => {
+    fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', (err, data) => {
+        const province = JSON.parse( data );
+        if (err)
+            return console.log(err)
+        res.render(__dirname + "/views/index.ejs", {province: province})
+    });
+})
+
+app.get('/collection', (req, res) => {
+    afficherCollection(res)
+})
+
 //requte pour ajouter
 app.get('/ajouter', (req, res) => {
     //on sauvegarde les données dans la DB mongo
@@ -67,7 +69,7 @@ app.get('/detruire', (req, res) => {
     afficherCollection(res);
 })
 
-//requete pour ajouter le contenu JSON
+//requete pour ajouter tous le contenu JSON dans la base de donnée
 app.get("/ajouter-plusieurs", (req, res) => {
     fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', (err, data) => {
         const province = JSON.parse( data );
