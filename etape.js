@@ -9,17 +9,9 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static('public'))  // pour utiliser le dossier public
 app.use(bodyParser.json())  // pour traiter les données JSON
 
-//acces au fichier à lire sur "/"
-app.get('/provinces',  (req, res) => {
-    fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', (err, data) => {
-        const province = JSON.parse( data );
-        if (err)
-            return console.log(err)
-        res.render(__dirname + "/views/index.ejs", {province: province})
-    });
-})
 
-//acces au fichier à lire sur "/"
+
+//acces au fichier à lire sur "/fichier"
 app.get('/fichier',  (req, res) => {
     res.sendFile(__dirname + "/public/text/collection_provinces.json")
 })
