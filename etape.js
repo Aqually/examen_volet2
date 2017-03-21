@@ -11,7 +11,10 @@ app.use(bodyParser.json())  // pour traiter les données JSON
 
 //acces au fichier à lire sur "/"
 app.get('/',  (req, res) => {
-    res.sendFile(__dirname + "/public/text/collection_provinces.json")
+    fs.readFile( __dirname + "/public/data/" + "usagers.json", 'utf8', function (err, data) {
+        res.render(__dirname + "/views/index.ejs", {adresse: data})
+    });
+
 })
 
 //utiliser le port 8080
