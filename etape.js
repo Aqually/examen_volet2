@@ -56,7 +56,7 @@ app.get('/ajouter', (req, res) => {
     const data = creerProvince();
     db.collection('provinces').save(data, (err, result) => {
         if (err)
-            return console.warn(err)
+            return console.error(err)
         afficherCollection(res)
     })
 })
@@ -65,6 +65,18 @@ app.get('/ajouter', (req, res) => {
 app.get('/detruire', (req, res) => {
     db.collection('provinces').drop();
     afficherCollection(res);
+})
+
+//requete pour ajouter le contenu JSON
+app.get("/ajouter-plusieurs", (req, res) => {
+    fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', (err, data) => {
+        const province = JSON.parse( data );
+        db.collection("provinces").insertMany(province, (err, results) => {
+            if(err)
+                console.error(err);
+            afficherCollection(res);
+        });
+    })
 })
 
 app.get("/", (req, res) =>{
