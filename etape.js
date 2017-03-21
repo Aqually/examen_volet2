@@ -17,16 +17,6 @@ app.get('/fichier',  (req, res) => {
     res.sendFile(__dirname + "/public/text/collection_provinces.json")
 })
 
-app.get('/collection', (req, res) => {
-    const cursor = db.collection('provinces').find().toArray( (err, data) => {
-        if (err)
-            return console.log(err)
-            // renders index.ejs
-        // affiche le contenu de la BD
-        res.render('index.ejs', {province: data})
-    })
-})
-
 //acces au fichier à lire sur "/"
 app.get('/provinces',  (req, res) => {
     fs.readFile( __dirname + "/public/text/" + "collection_provinces.json", 'utf8', (err, data) => {
@@ -36,6 +26,22 @@ app.get('/provinces',  (req, res) => {
         res.render(__dirname + "/views/index.ejs", {province: province})
     });
 })
+
+
+
+app.get('/collection', (req, res) => {
+    afficherCollection(res)
+})
+
+function afficherCollection(res){
+    const cursor = db.collection('provinces').find().toArray( (err, data) => {
+        if (err)
+            return console.log(err)
+            // renders index.ejs
+        // affiche le contenu de la BD
+        res.render('index.ejs', {province: data})
+    })
+}
 
 function creerProvince(){
     return {
@@ -52,15 +58,10 @@ app.get('/ajouter', (req, res) => {
     db.collection('provinces').save(data, (err, result) => {
         if (err)
             return console.warn(err)
-        const cursor = db.collection('provinces').find().toArray( (err, data) => {
-            if (err)
-                return console.log(err)
-                // renders index.ejs
-            // affiche le contenu de la BD
-            res.render('index.ejs', {province: data})
-        })
+        afficherCollection(res)
     })
 })
+
 app.get("/", (req, res) =>{
     res.redirect('/provinces');
 })
